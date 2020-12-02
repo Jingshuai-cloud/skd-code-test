@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { MdEdit } from 'react-icons/md';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { Wrapper, IconWrapper } from './UserIndex.styles';
 import { useHistory } from 'react-router-dom';
@@ -77,13 +78,16 @@ export default function UserIndex() {
 
   const history = useHistory();
   const handleEdit = (id: string) => {
-    history.push(`/user/${id}`);
+    history.push(`/user-detail/${id}`);
   };
 
   const handleDelete = (id: string) => {
     window.alert('click');
   };
 
+  const handleCreateUser = () => {
+    history.push('/create-a-user');
+  };
   useEffect(() => {
     fetch('/api/v2/users')
       .then((res) => res.json())
@@ -95,6 +99,9 @@ export default function UserIndex() {
 
   return (
     <Wrapper>
+      <IconWrapper>
+        <AiOutlinePlusCircle size={35} color="#49b53d" onClick={handleCreateUser} />
+      </IconWrapper>
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
           <Table stickyHeader aria-label="sticky table">

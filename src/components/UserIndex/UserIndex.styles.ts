@@ -6,4 +6,6 @@ export const Wrapper = styled.div`
 
 export const IconWrapper = styled.div`
   cursor: pointer;
+  float: right;
+  padding: 10px;
 `;

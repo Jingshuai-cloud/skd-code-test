@@ -12,9 +12,16 @@ interface Props {
   label: string;
   type?: string;
   required?: boolean;
+  disabled?: boolean;
 }
 
-const FormikField: React.FC<Props> = ({ name, label, type = 'text', required = false }) => {
+const FormikField: React.FC<Props> = ({
+  name,
+  label,
+  type = 'text',
+  required = false,
+  disabled = false,
+}) => {
   return (
     <FieldWrapper className="FormikField">
       <Field
@@ -25,6 +32,7 @@ const FormikField: React.FC<Props> = ({ name, label, type = 'text', required = f
         name={name}
         fullWidth
         type={type}
+        disabled={disabled}
         FormHelperTextProps={{
           className: 'error',
         }}

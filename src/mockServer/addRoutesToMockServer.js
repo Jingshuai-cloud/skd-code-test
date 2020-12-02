@@ -14,10 +14,10 @@ const addRoutesToMockServer = (mockServer) => {
     return schema.users.all();
   });
   mockServer.get('/users/:id', (schema, request) => {
-    const jwt = request.requestHeaders.authorization;
-    if (jwt === 'null' || !jwt) {
-      return new Response(401, {}, { message: 'Please Login' });
-    }
+    // const jwt = request.requestHeaders.authorization;
+    // if (jwt === 'null' || !jwt) {
+    //   return new Response(401, {}, { message: 'Please Login' });
+    // }
 
     const user = schema.users.find(request.params.id);
     if (!user) {

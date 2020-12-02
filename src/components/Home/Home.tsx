@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import FormikField from '../FormikField/FormikField';
+import FormikField from '../FormikElements/FormikField';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { LoginCard } from './Home.styles';
