@@ -7,10 +7,10 @@ const addRoutesToMockServer = (mockServer) => {
 
   // Users CRUD
   mockServer.get('/users', (schema, request) => {
-    // const jwt = request.requestHeaders.authorization;
-    // if (jwt === 'null' || !jwt) {
-    //   return new Response(401, {}, { message: 'Please Login' });
-    // }
+    const jwt = request.requestHeaders.authorization;
+    if (jwt === 'null' || !jwt) {
+      return new Response(401, {}, { message: 'Please Login' });
+    }
     return schema.users.all();
   });
   mockServer.get('/users/:id', (schema, request) => {
@@ -67,11 +67,11 @@ const addRoutesToMockServer = (mockServer) => {
 
   // Session Login / Logout
   mockServer.post('/users/tokens', (schema, request) => {
-    const acceptedParam = { email: 'test@skand.io', password: 'password' };
+    const acceptedParam = { email: 'test@skand.io', password: 'p' };
     const requestBody = JSON.parse(request.requestBody);
     const headers = { Authorization: '123abc456def789ghi' };
     const errorMessage = { message: 'Email does not match the password' };
-    const responseData = 'ok';
+    const responseData = { message: 'ok' };
 
     const expectedParamMatchesRequest = !!acceptedParam && isEqual(requestBody, acceptedParam);
 

@@ -13,6 +13,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { Wrapper, IconWrapper } from './UserIndex.styles';
 import { useHistory } from 'react-router-dom';
+import { fetchUsers } from '../../API/API';
 
 const columns = [
   {
@@ -88,13 +89,14 @@ export default function UserIndex() {
   const handleCreateUser = () => {
     history.push('/create-a-user');
   };
+
   useEffect(() => {
-    fetch('/api/v2/users')
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json.users);
-        setUsers(json.users);
-      });
+    const key = window.localStorage.getItem('key') || '';
+    const users = fetchUsers(key);
+    console.log(key);
+    users.then((result) => {
+      setUsers(result);
+    });
   }, []);
 
   return (

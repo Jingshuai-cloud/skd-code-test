@@ -12,4 +12,8 @@ export const LoginCard = styled.div`
   text-align: left;
   display: flex;
   flex-direction: column;
+
+  .p {
+    margin-top: 10px;
+  }
 `;
