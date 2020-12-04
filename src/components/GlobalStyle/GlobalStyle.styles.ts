@@ -61,4 +61,10 @@ export const CardWrapper = styled.div`
     text-align: left;
     margin: 0;
   }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;

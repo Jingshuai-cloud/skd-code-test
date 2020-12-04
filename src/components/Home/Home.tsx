@@ -6,11 +6,13 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { LoginCard } from './Home.styles';
 import { fetchLogin } from '../../API/API';
-import { connect } from 'react-redux';
-import { addTodo } from '../../redux/actions/action';
 import TodoList from './TodoList';
 import VisibilityFilter from './VisibilityFilters';
 import AddTodo from './AddTodo';
+import Token from './Token';
+import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setToken } from '../../redux/actions/action';
 
 interface FormValues {
   email: string;
@@ -28,36 +30,24 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Home: React.FC = () => {
+  const token = useSelector((state: any) => state.token);
+
   const history = useHistory();
   const [loginMsg, SetLoginMsg] = useState('');
-  const [input, SetInput] = useState('');
+  const dispatch = useDispatch();
 
-  const updateInput = (input: string) => {
-    SetInput(input);
-  };
-
-  const handleAddTodo = () => {
-    addTodo(input);
-    SetInput('');
-  };
-
-  const handleSubmit = (values: FormValues): void => {
+  const handleSubmit = async (values: FormValues) => {
     const loginStatus = fetchLogin(values);
     loginStatus.then((res) => {
       res.json().then((re) => {
         if (re.message !== 'ok') {
           SetLoginMsg(re.message);
+        } else {
+          dispatch(setToken(res.headers.get('Authorization')));
+          history.push('/user-index');
         }
       });
-      const header = res.headers.get('Authorization');
-      window.localStorage.setItem('key', header || '');
-
-      console.log(window.localStorage.getItem('key'));
     });
-
-    if (!window.localStorage.getItem('key')) {
-      history.push('/user-index');
-    }
   };
 
   return (
@@ -91,8 +81,16 @@ const Home: React.FC = () => {
       <AddTodo />
       <TodoList />
       <VisibilityFilter />
+      <Token />
+      <h1>{token}</h1>
     </>
   );
 };
 
-export default Home;
+//export default Home;
+
+// const mapStateToProps = (state: any) => {
+//   return { token: state.token };
+// };
+
+export default connect(null, { setToken })(Home);

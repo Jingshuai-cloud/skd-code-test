@@ -22,6 +22,47 @@ export const fetchUsers = async (key: string) => {
   return data.users;
 };
 
+export const createUser = async (key: string, user: object) => {
+  const endpoint = url + 'users';
+  const data = await (
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        authorization: key,
+      },
+      body: JSON.stringify(user),
+    })
+  ).json();
+  return data;
+};
+
+export const patchUser = async (key: string, user: object, userId: string) => {
+  const endpoint = url + `users/${userId}`;
+  const data = await (
+    await fetch(endpoint, {
+      method: 'PATCH',
+      headers: {
+        authorization: key,
+      },
+      body: JSON.stringify(user),
+    })
+  ).json();
+  return data;
+};
+
+export const deleteUser = async (key: string, userId: string) => {
+  const endpoint = url + `users/${userId}`;
+  const data = await (
+    await fetch(endpoint, {
+      method: 'DELETE',
+      headers: {
+        authorization: key,
+      },
+    })
+  ).json();
+  return data;
+};
+
 export const fetchMenus = async () => {
   const endpoint = url + `menus`;
   const data = await (await fetch(endpoint)).json();

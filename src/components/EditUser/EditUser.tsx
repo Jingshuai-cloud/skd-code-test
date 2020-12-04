@@ -6,6 +6,8 @@ import FormikField from '../FormikElements/FormikField';
 import FormikSelect, { FormikSelectItem } from '../FormikElements/FormikSelect';
 import Button from '@material-ui/core/Button';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { patchUser } from '../../API/API';
 
 interface FormValues {
   id: string;
@@ -63,10 +65,16 @@ const UserDetail: React.FC = () => {
       });
   }, []);
 
-  const handleSubmit = (values: FormValues): void => {
-    // history.push('/user-index');
-    alert(JSON.stringify(values));
-    console.log(user);
+  const token = useSelector((state: any) => state.token);
+
+  const handleSubmit = async (values: FormValues) => {
+    const result = await patchUser(token, values, values.id);
+    console.log(result);
+    history.push('/user-index');
+  };
+
+  const handleGoback = () => {
+    history.push('/user-index');
   };
 
   return (
@@ -88,14 +96,19 @@ const UserDetail: React.FC = () => {
               <FormikField name="jobs_count" label="Jobs Count" type="number" />
               <FormikSelect name="active" items={activeItems} label="Active" required />
               <FormikField name="slack_username" label="Slack User Name" />
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={!dirty || !isValid}
-                type="submit"
-              >
-                Update
-              </Button>
+              <div className="button-wrapper">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={!dirty || !isValid}
+                  type="submit"
+                >
+                  Update
+                </Button>
+                <Button variant="contained" color="primary" onClick={handleGoback}>
+                  Go back
+                </Button>
+              </div>
             </Form>
           );
         }}

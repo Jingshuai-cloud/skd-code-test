@@ -8,7 +8,9 @@ const addRoutesToMockServer = (mockServer) => {
   // Users CRUD
   mockServer.get('/users', (schema, request) => {
     const jwt = request.requestHeaders.authorization;
-    if (jwt === 'null' || !jwt) {
+    // if (jwt === 'null' || !jwt)
+    console.log(jwt);
+    if (jwt !== '123abc456def789ghi') {
       return new Response(401, {}, { message: 'Please Login' });
     }
     return schema.users.all();
@@ -28,17 +30,18 @@ const addRoutesToMockServer = (mockServer) => {
   });
   mockServer.post('/users', (schema, request) => {
     const jwt = request.requestHeaders.authorization;
-    if (jwt === 'null' || !jwt) {
+    if (jwt !== '123abc456def789ghi') {
       return new Response(401, {}, { message: 'Please Login' });
     }
 
     const attributes = JSON.parse(request.requestBody);
     const idAppendedAttributes = { ...attributes, id: 1000 };
+    console.log(idAppendedAttributes);
     return schema.users.create(idAppendedAttributes);
   });
   mockServer.patch('/users/:id', (schema, request) => {
     const jwt = request.requestHeaders.authorization;
-    if (jwt === 'null' || !jwt) {
+    if (jwt !== '123abc456def789ghi') {
       return new Response(401, {}, { message: 'Please Login' });
     }
 
@@ -52,7 +55,7 @@ const addRoutesToMockServer = (mockServer) => {
   });
   mockServer.delete('/users/:id', (schema, request) => {
     const jwt = request.requestHeaders.authorization;
-    if (jwt === 'null' || !jwt) {
+    if (jwt !== '123abc456def789ghi') {
       return new Response(401, {}, { message: 'Please Login' });
     }
 

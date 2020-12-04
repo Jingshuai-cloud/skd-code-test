@@ -1,4 +1,9 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER } from './actionType';
+import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TOKEN } from './actionType';
+
+export const setToken = (token) => ({
+  type: SET_TOKEN,
+  payload: { token },
+});
 
 let nextTodoId = 0;
 

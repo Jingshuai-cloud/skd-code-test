@@ -21,9 +21,7 @@ class AddTodo extends React.Component {
     return (
       <div>
         <input onChange={(e) => this.updateInput(e.target.value)} value={this.state.input} />
-        <button className="add-todo" onClick={this.handleAddTodo}>
-          Add Todo
-        </button>
+        <button onClick={this.handleAddTodo}>Add Todo</button>
       </div>
     );
   }
